@@ -65,3 +65,6 @@ func TestApt(t *testing.T) {
 		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "--force-yes")
 	})
 }
+
+// TODO: Detect which system we are on and run appropriate tests
+// TODO: Add linux networking tests
