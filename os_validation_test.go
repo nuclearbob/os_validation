@@ -59,9 +59,9 @@ func TestApt(t *testing.T) {
 		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "update")
 	})
 	Convey("Apt should be able to upgrade installed packages", t, func() {
-		run_cmd("apt", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "--force-yes")
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "--force-yes")
 	})
 	Convey("Apt should be able to install a new package", t, func() {
-		run_cmd("apt", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "--force-yes")
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "--force-yes")
 	})
 }
