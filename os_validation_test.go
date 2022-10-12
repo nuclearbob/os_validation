@@ -54,10 +54,10 @@ func TestYum(t *testing.T) {
 }
 
 func TestApt(t *testing.T) {
-	// Doesn't work
 	Convey("Apt should be able to update its cache files", t, func() {
 		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "update")
 	})
+	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
 	Convey("Apt should be able to upgrade installed packages", t, func() {
 		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "--force-yes")
 	})
