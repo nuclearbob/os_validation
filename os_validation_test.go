@@ -62,32 +62,7 @@ func run_cmd_without_check(cmd string, args ...string) error {
 	return err
 }
 
-func TestYum(t *testing.T) {
-	Convey("Yum should be able to update its cache files", t, func() {
-		run_cmd("yum", "-y", "makecache")
-	})
-	Convey("Yum should be able to upgrade installed packages", t, func() {
-		run_cmd("yum", "-y", "upgrade")
-	})
-	Convey("Yum should be able to install a new package", t, func() {
-		run_cmd("yum", "-y", "install", "httpd")
-	})
-}
-
-func TestApt(t *testing.T) {
-	Convey("Apt should be able to update its cache files", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "update")
-	})
-	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
-	Convey("Apt should be able to upgrade installed packages", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "--force-yes")
-	})
-	Convey("Apt should be able to install a new package", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "--force-yes")
-	})
-}
-
-func TestApk(t *testing.T) {
+func apkTests(t *testing.T) {
 	Convey("apk should be able to update its cache files", t, func() {
 		run_cmd("apk", "update")
 	})
@@ -100,7 +75,20 @@ func TestApk(t *testing.T) {
 	})
 }
 
-func TestNix(t *testing.T) {
+func aptTests(t *testing.T) {
+	Convey("Apt should be able to update its cache files", t, func() {
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "update")
+	})
+	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
+	Convey("Apt should be able to upgrade installed packages", t, func() {
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "--force-yes")
+	})
+	Convey("Apt should be able to install a new package", t, func() {
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "--force-yes")
+	})
+}
+
+func nixTests(t *testing.T) {
 	Convey("nix should be able to update its cache files", t, func() {
 		run_cmd("nix-channel", "--update")
 	})
@@ -110,6 +98,18 @@ func TestNix(t *testing.T) {
 	})
 	Convey("nix should be able to install a new package", t, func() {
 		run_cmd("nix-env", "-i", "fortune-mod")
+	})
+}
+
+func yumTests(t *testing.T) {
+	Convey("Yum should be able to update its cache files", t, func() {
+		run_cmd("yum", "-y", "makecache")
+	})
+	Convey("Yum should be able to upgrade installed packages", t, func() {
+		run_cmd("yum", "-y", "upgrade")
+	})
+	Convey("Yum should be able to install a new package", t, func() {
+		run_cmd("yum", "-y", "install", "httpd")
 	})
 }
 
@@ -127,6 +127,12 @@ func TestOSValidation(t *testing.T) {
 		linuxNetworkingTests(t)
 		var si sysinfo.SysInfo
 		si.GetSysInfo()
+		switch si.OS.Vendor {
+		case "almalinux", "redhat":
+			yumTests(t)
+		case "debian", "ubuntu":
+			aptTests(t)
+		}
 		log.Print(si.OS)
 		log.Print(si.OS.Vendor)
 	default:
