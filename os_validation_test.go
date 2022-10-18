@@ -130,6 +130,6 @@ func TestOSValidation(t *testing.T) {
 		log.Print(si.OS)
 		log.Print(si.OS.Vendor)
 	default:
-		log.Printf("No tests implemenmted for os %s", runtime.GOOS)
+		log.Printf("No tests implemented for os %s", runtime.GOOS)
 	}
 }
