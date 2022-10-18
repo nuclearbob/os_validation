@@ -13,6 +13,8 @@ func run_cmd(cmd string, args ...string) error {
 
 	command := exec.Command(cmd, args...)
 
+	command.Stdout = os.Stdout
+	command.Stderr = os.Stderr
 	err := command.Run()
 
 	if err != nil {
@@ -30,6 +32,8 @@ func run_cmd_with_env(env string, cmd string, args ...string) error {
 	command.Env = os.Environ()
 	command.Env = append(command.Env, env)
 
+	command.Stdout = os.Stdout
+	command.Stderr = os.Stderr
 	err := command.Run()
 
 	if err != nil {
@@ -37,6 +41,21 @@ func run_cmd_with_env(env string, cmd string, args ...string) error {
 	}
 
 	So(err, ShouldEqual, nil)
+
+	return err
+}
+
+func run_cmd_without_check(cmd string, args ...string) error {
+
+	command := exec.Command(cmd, args...)
+
+	command.Stdout = os.Stdout
+	command.Stderr = os.Stderr
+	err := command.Run()
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	return err
 }
@@ -66,5 +85,38 @@ func TestApt(t *testing.T) {
 	})
 }
 
+func TestApk(t *testing.T) {
+	Convey("apk should be able to update its cache files", t, func() {
+		run_cmd("apk", "update")
+	})
+	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
+	Convey("apk should be able to upgrade installed packages", t, func() {
+		run_cmd("apk", "upgrade")
+	})
+	Convey("apk should be able to install a new package", t, func() {
+		run_cmd("apk", "add", "fortune")
+	})
+}
+
+func TestNix(t *testing.T) {
+	Convey("nix should be able to update its cache files", t, func() {
+		run_cmd("nix-channel", "--update")
+	})
+	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
+	Convey("nix should be able to upgrade installed packages", t, func() {
+		run_cmd("nix-env", "--upgrade")
+	})
+	Convey("nix should be able to install a new package", t, func() {
+		run_cmd("nix-env", "-i", "fortune-mod")
+	})
+}
+
+func TestLinuxNetworking(t *testing.T) {
+	run_cmd_without_check("ip", "address")
+	run_cmd_without_check("ip", "link")
+	run_cmd_without_check("ip", "route")
+	run_cmd_without_check("lspci")
+	run_cmd_without_check("lshw")
+}
+
 // TODO: Detect which system we are on and run appropriate tests
-// TODO: Add linux networking tests
