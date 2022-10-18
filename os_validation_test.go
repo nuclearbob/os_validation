@@ -77,14 +77,14 @@ func apkTests(t *testing.T) {
 
 func aptTests(t *testing.T) {
 	Convey("Apt should be able to update its cache files", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "update")
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt-get", "update")
 	})
 	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
 	Convey("Apt should be able to upgrade installed packages", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "--force-yes")
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt-get", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "--force-yes")
 	})
 	Convey("Apt should be able to install a new package", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "--force-yes")
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt-get", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "--force-yes")
 	})
 }
 
@@ -122,11 +122,13 @@ func linuxNetworkingTests(t *testing.T) {
 }
 
 func TestOSValidation(t *testing.T) {
+	log.Printf("Running tests for %s", runtime.GOOS)
 	switch runtime.GOOS {
 	case "linux":
 		linuxNetworkingTests(t)
 		var si sysinfo.SysInfo
 		si.GetSysInfo()
+		log.Printf("Running tests for %s", si.OS.Vendor)
 		switch si.OS.Vendor {
 		case "almalinux", "redhat":
 			yumTests(t)
