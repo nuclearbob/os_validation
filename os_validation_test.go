@@ -113,7 +113,7 @@ func TestNix(t *testing.T) {
 	})
 }
 
-func TestLinuxNetworking(t *testing.T) {
+func linuxNetworkingTests(t *testing.T) {
 	log.Print(runtime.GOOS)
 	run_cmd_without_check("ip", "address")
 	run_cmd_without_check("ip", "link")
@@ -126,4 +126,9 @@ func TestOSValidation(t *testing.T) {
 	var si sysinfo.SysInfo
 	si.GetSysInfo()
 	log.Print(si.OS)
+	log.Print(si.OS.Vendor)
+	if runtime.GOOS == "linux" {
+		linuxNetworkingTests(t)
+	}
+
 }
