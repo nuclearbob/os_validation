@@ -81,10 +81,10 @@ func aptTests(t *testing.T) {
 	})
 	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
 	Convey("Apt should be able to upgrade installed packages", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt-get", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y")
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt-get", "-o", "Dpkg::Options::=\"--force-confold\"", "dist-upgrade", "-q", "-y", "allow-change-held-packages")
 	})
 	Convey("Apt should be able to install a new package", t, func() {
-		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt-get", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y")
+		run_cmd_with_env("DEBIAN_FRONTEND=noninteractive", "apt-get", "-o", "Dpkg::Options::=\"--force-confold\"", "install", "fortune-mod", "-q", "-y", "allow-change-held-packages")
 	})
 }
 
