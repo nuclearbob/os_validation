@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"runtime"
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
@@ -112,6 +113,7 @@ func TestNix(t *testing.T) {
 }
 
 func TestLinuxNetworking(t *testing.T) {
+	log.Print(runtime.GOOS)
 	run_cmd_without_check("ip", "address")
 	run_cmd_without_check("ip", "link")
 	run_cmd_without_check("ip", "route")
