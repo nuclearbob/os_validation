@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
+	"github.com/zcalusic/sysinfo"
 )
 
 func run_cmd(cmd string, args ...string) error {
@@ -121,4 +122,8 @@ func TestLinuxNetworking(t *testing.T) {
 	run_cmd_without_check("lshw")
 }
 
-// TODO: Detect which system we are on and run appropriate tests
+func TestOSValidation(t *testing.T) {
+	var si sysinfo.SysInfo
+	si.GetSysInfo()
+	log.Print(si.OS)
+}
