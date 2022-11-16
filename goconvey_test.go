@@ -1,12 +1,9 @@
 package os_validation
 
 import (
-	"log"
-	"runtime"
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
-	"github.com/zcalusic/sysinfo"
 )
 
 // func run_cmd(cmd string, args ...string) error {
@@ -119,23 +116,23 @@ func linuxNetworkingTests(t *testing.T) {
 	run_cmd_without_check("lshw")
 }
 
-func TestOSValidation(t *testing.T) {
-	log.Printf("Running tests for %s", runtime.GOOS)
-	switch runtime.GOOS {
-	case "linux":
-		linuxNetworkingTests(t)
-		var si sysinfo.SysInfo
-		si.GetSysInfo()
-		log.Printf("Running tests for %s", si.OS.Vendor)
-		switch si.OS.Vendor {
-		case "almalinux", "redhat":
-			yumTests(t)
-		case "debian", "ubuntu":
-			aptTests(t)
-		}
-		log.Print(si.OS)
-		log.Print(si.OS.Vendor)
-	default:
-		log.Printf("No tests implemented for os %s", runtime.GOOS)
-	}
-}
+// func TestOSValidation(t *testing.T) {
+// 	log.Printf("Running tests for %s", runtime.GOOS)
+// 	switch runtime.GOOS {
+// 	case "linux":
+// 		linuxNetworkingTests(t)
+// 		var si sysinfo.SysInfo
+// 		si.GetSysInfo()
+// 		log.Printf("Running tests for %s", si.OS.Vendor)
+// 		switch si.OS.Vendor {
+// 		case "almalinux", "redhat":
+// 			yumTests(t)
+// 		case "debian", "ubuntu":
+// 			aptTests(t)
+// 		}
+// 		log.Print(si.OS)
+// 		log.Print(si.OS.Vendor)
+// 	default:
+// 		log.Printf("No tests implemented for os %s", runtime.GOOS)
+// 	}
+// }
