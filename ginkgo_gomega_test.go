@@ -144,10 +144,10 @@ func TestGinkgoGomega(t *testing.T) {
 
 var _ = Describe("OS_Validation", func() {
 	Describe("Linux networking", func() {
-		It("should run ip address", func() { Expect(run_cmd_without_check("ip", "address")).To(Equal(nil)) })
-		It("should run ip link", func() { Expect(run_cmd_without_check("ip", "link")).To(Equal(nil)) })
-		It("should run ip route", func() { Expect(run_cmd_without_check("ip", "route")).To(Equal(nil)) })
-		It("should run ip lspci", func() { Expect(run_cmd_without_check("lspci")).To(Equal(nil)) })
-		It("should run ip lshw", func() { Expect(run_cmd_without_check("lshw")).To(Equal(nil)) })
+		It("should run ip address", func() { Expect(run_cmd_without_check("ip", "address")).To(BeNil()) })
+		It("should run ip link", func() { Expect(run_cmd_without_check("ip", "link")).To(BeNil()) })
+		It("should run ip route", func() { Expect(run_cmd_without_check("ip", "route")).To(BeNil()) })
+		It("should run ip lspci", func() { Expect(run_cmd_without_check("lspci")).To(BeNil()) })
+		It("should run ip lshw", func() { Expect(run_cmd_without_check("lshw")).To(BeNil()) })
 	})
 })
