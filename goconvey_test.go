@@ -2,8 +2,6 @@ package os_validation
 
 import (
 	"log"
-	"os"
-	"os/exec"
 	"runtime"
 	"testing"
 
@@ -11,56 +9,56 @@ import (
 	"github.com/zcalusic/sysinfo"
 )
 
-func run_cmd(cmd string, args ...string) error {
+// func run_cmd(cmd string, args ...string) error {
 
-	command := exec.Command(cmd, args...)
+// 	command := exec.Command(cmd, args...)
 
-	command.Stdout = os.Stdout
-	command.Stderr = os.Stderr
-	err := command.Run()
+// 	command.Stdout = os.Stdout
+// 	command.Stderr = os.Stderr
+// 	err := command.Run()
 
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	So(err, ShouldEqual, nil)
+// 	So(err, ShouldEqual, nil)
 
-	return err
-}
+// 	return err
+// }
 
-func run_cmd_with_env(env string, cmd string, args ...string) error {
+// func run_cmd_with_env(env string, cmd string, args ...string) error {
 
-	command := exec.Command(cmd, args...)
-	command.Env = os.Environ()
-	command.Env = append(command.Env, env)
+// 	command := exec.Command(cmd, args...)
+// 	command.Env = os.Environ()
+// 	command.Env = append(command.Env, env)
 
-	command.Stdout = os.Stdout
-	command.Stderr = os.Stderr
-	err := command.Run()
+// 	command.Stdout = os.Stdout
+// 	command.Stderr = os.Stderr
+// 	err := command.Run()
 
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	So(err, ShouldEqual, nil)
+// 	So(err, ShouldEqual, nil)
 
-	return err
-}
+// 	return err
+// }
 
-func run_cmd_without_check(cmd string, args ...string) error {
+// func run_cmd_without_check(cmd string, args ...string) error {
 
-	command := exec.Command(cmd, args...)
+// 	command := exec.Command(cmd, args...)
 
-	command.Stdout = os.Stdout
-	command.Stderr = os.Stderr
-	err := command.Run()
+// 	command.Stdout = os.Stdout
+// 	command.Stderr = os.Stderr
+// 	err := command.Run()
 
-	if err != nil {
-		log.Print(err)
-	}
+// 	if err != nil {
+// 		log.Print(err)
+// 	}
 
-	return err
-}
+// 	return err
+// }
 
 func apkTests(t *testing.T) {
 	Convey("apk should be able to update its cache files", t, func() {
