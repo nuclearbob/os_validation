@@ -5,6 +5,7 @@ go 1.18
 require github.com/smartystreets/goconvey v1.7.2
 
 require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -14,7 +15,9 @@ require (
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/onsi/ginkgo/v2 v2.5.0 // indirect
 	github.com/onsi/gomega v1.24.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/smartystreets/assertions v1.2.0 // indirect
+	github.com/stretchr/testify v1.8.1 // indirect
 	github.com/zcalusic/sysinfo v0.9.5 // indirect
 	golang.org/x/net v0.2.0 // indirect
 	golang.org/x/sys v0.2.0 // indirect
