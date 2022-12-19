@@ -124,10 +124,10 @@ func linuxNetworkingTests(t *testing.T) {
 func gossTests(t *testing.T, os string) {
 	Convey("The system should pass goss validation", t, func() {
 		// Need to install goss
-		run_cmd("./goss/install")
+		run_cmd("sh", "./goss/install")
 		var goss_file = "goss/" + os + ".yaml"
 		Convey("The goss spec for "+goss_file+" should pass", t, func() {
-			run_cmd("./" + goss_file)
+			run_cmd("sh", "./"+goss_file)
 		})
 	})
 }
