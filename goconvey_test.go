@@ -126,7 +126,7 @@ func gossTests(t *testing.T, os string) {
 		// Need to install goss
 		run_cmd("sh", "./goss/install")
 		var goss_file = "goss/" + os + ".yaml"
-		Convey("The goss spec for "+goss_file+" should pass", t, func() {
+		Convey("The goss spec for "+goss_file+" should pass", func() {
 			run_cmd("sh", "./"+goss_file)
 		})
 	})
