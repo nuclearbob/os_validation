@@ -121,6 +121,17 @@ func linuxNetworkingTests(t *testing.T) {
 	run_cmd_without_check("lshw")
 }
 
+func gossTests(t *testing.T, os string) {
+	Convey("The system should pass goss validation", t, func() {
+		// Need to install goss
+		run_cmd("./goss/install")
+		var goss_file = "goss/" + os + ".yaml"
+		Convey("The goss spec for "+goss_file+" should pass", t, func() {
+			run_cmd("./" + goss_file)
+		})
+	})
+}
+
 func TestOSValidation(t *testing.T) {
 	log.Printf("Running tests for %s", runtime.GOOS)
 	switch runtime.GOOS {
@@ -137,6 +148,7 @@ func TestOSValidation(t *testing.T) {
 		}
 		log.Print(si.OS)
 		log.Print(si.OS.Vendor)
+		gossTests(t, si.OS.Name)
 	default:
 		log.Printf("No tests implemented for os %s", runtime.GOOS)
 	}
