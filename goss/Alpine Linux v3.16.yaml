@@ -1,0 +1,29 @@
+port:
+  tcp:22:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp6:22:
+    listening: true
+    ip:
+    - '::'
+service:
+  sshd:
+    enabled: false
+    running: true
+user:
+  sshd:
+    exists: true
+    uid: 22
+    gid: 22
+    groups:
+    - sshd
+    home: /dev/null
+    shell: /sbin/nologin
+group:
+  sshd:
+    exists: true
+    gid: 22
+process:
+  sshd:
+    running: true
