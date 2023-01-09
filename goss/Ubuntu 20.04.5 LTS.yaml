@@ -2,7 +2,7 @@ package:
   apt:
     installed: true
     versions:
-    - 2.4.8
+    - 2.0.9
 port:
   tcp:22:
     listening: true
