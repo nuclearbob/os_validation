@@ -66,7 +66,6 @@ func apkTests(t *testing.T) {
 	Convey("apk should be able to update its cache files", t, func() {
 		run_cmd("apk", "update")
 	})
-	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
 	Convey("apk should be able to upgrade installed packages", t, func() {
 		run_cmd("apk", "upgrade")
 	})
@@ -92,7 +91,6 @@ func nixTests(t *testing.T) {
 	Convey("nix should be able to update its cache files", t, func() {
 		run_cmd("nix-channel", "--update")
 	})
-	// This failed when there was an new kernel. That might be okay, we'll have to see how often it comes up. Maybe upgrade instead of dist-upgrade
 	Convey("nix should be able to upgrade installed packages", t, func() {
 		run_cmd("nix-env", "--upgrade")
 	})
